@@ -1,0 +1,254 @@
+{
+ "_doc": "Beat sheet v12 (01/11, feedback from Hoa on Pumpkin): PHONE STATIC at the centre of the frame for the whole clip, no pan/zoom/shake/tilt, just one straight cut to the end card (big phone on the right, text on the left). Recording render/promo/v12/screen.mp4 (FILM0 2.2; + brighter grainy reflections, rain splashing on lit tubes; + grainy reflections on asphalt, wet wall base + contact shadow; end card logo flicker synced to audio; demo clock waits for 45 smooth frames; promo background rain (rain_bg); + rain hitting the wet ground with splashes, ground reflection without ripple distortion; + afterglow on switch-off; POLISH: sharp reflections, volumetric tube shadows, frosted glass when off, shadows fade when lit, glass streak slides on tilt, hot white halo; + post.ts haze fix (o no longer washed out); POLISH milestone 3 + rain beading/dripping on tubes + colour fix on colour change; with POLISH milestones 1–2, falling rain, LiveTrail chalk trail, neon/argon gas; sign already lit before t=0) (Release, TIMESCALE 0.5 compressed to 60 fps, 60/60 frames per second). Demo script v3 (src/demo/script.ts): first frame shows the 'hello' sign already lit; draw heart 0.45–~1.5 (blockout join), heart strikes ~2.0; tap heart 2.85 → palette pops up → red 3.3; tap text 4.1 → cyan 4.55; tilt 5.3–7.9; 'o' broken 6.9; switch off 8.6; switch on 9.75 (shared flash 9.80 = sync point); fully lit ~10.75.",
+ "app_start": 0.02,
+ "app_end": 13.232,
+ "card": 3.2,
+ "switch": 9.75,
+ "burst": 9.8,
+ "lit": 11.07,
+ "audio": "render/audio/mix_v12.wav",
+ "sheet": [
+  0.05,
+  1.0,
+  3.25,
+  9.3,
+  12.9,
+  15.3
+ ],
+ "glow": [
+  [
+   "start",
+   "#ff3fa4",
+   1.0
+  ],
+  [
+   4.55,
+   "#3ff3ff",
+   1.0
+  ],
+  [
+   8.6,
+   "#3ff3ff",
+   0.0
+  ],
+  [
+   9.8,
+   "#3ff3ff",
+   0.55
+  ],
+  [
+   11.07,
+   "#3ff3ff",
+   1.0
+  ],
+  [
+   "card",
+   "#ff3fa4",
+   0.7
+  ]
+ ],
+ "sections": [
+  [
+   "start",
+   "#1c0512",
+   "#4a0f33",
+   "#ff3fa4",
+   0.187,
+   0
+  ],
+  [
+   4.55,
+   "#03141b",
+   "#0b3a45",
+   "#3ff3ff",
+   0.173,
+   18
+  ],
+  [
+   8.6,
+   "#05060c",
+   "#0b0d18",
+   "#1a2140",
+   0.029,
+   4
+  ],
+  [
+   9.8,
+   "#03141b",
+   "#0b3a45",
+   "#3ff3ff",
+   0.187,
+   6
+  ],
+  [
+   "card",
+   "#10040f",
+   "#2c0a2c",
+   "#ff3fa4",
+   0.158,
+   0
+  ]
+ ],
+ "words": [
+  [
+   "DRAW",
+   0.02,
+   2.85,
+   "#ff7fc4",
+   0.45,
+   2.6
+  ],
+  [
+   "COLOR",
+   2.85,
+   5.3,
+   "#ff6b6b",
+   0.45,
+   2.3
+  ],
+  [
+   "TILT",
+   5.3,
+   8.6,
+   "#3ff3ff",
+   0.4,
+   2.7
+  ],
+  [
+   "GLOW",
+   9.8,
+   "card",
+   "#3ff3ff",
+   0.6,
+   2.7
+  ]
+ ],
+ "phone": [
+  {
+   "t": "start",
+   "rot": [
+    0,
+    0,
+    0
+   ],
+   "loc": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "t": "card-0.02",
+   "rot": [
+    0,
+    0,
+    0
+   ],
+   "loc": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "t": "card",
+   "rot": [
+    0,
+    0,
+    -8
+   ],
+   "loc": [
+    1.22,
+    -2.7,
+    0.05
+   ]
+  },
+  {
+   "t": "end",
+   "rot": [
+    0,
+    0,
+    -8
+   ],
+   "loc": [
+    1.22,
+    -2.7,
+    0.05
+   ]
+  }
+ ],
+ "camera": [
+  {
+   "t": "start",
+   "at": {
+    "world": [
+     0,
+     0,
+     0
+    ]
+   },
+   "d": 5.0,
+   "orbit": [
+    0,
+    0
+   ]
+  },
+  {
+   "t": "card-0.02",
+   "at": {
+    "world": [
+     0,
+     0,
+     0
+    ]
+   },
+   "d": 5.0,
+   "orbit": [
+    0,
+    0
+   ]
+  },
+  {
+   "t": "card",
+   "at": {
+    "world": [
+     0,
+     0,
+     0
+    ]
+   },
+   "d": 8.6,
+   "orbit": [
+    0,
+    0
+   ]
+  },
+  {
+   "t": "end",
+   "at": {
+    "world": [
+     0,
+     0,
+     0
+    ]
+   },
+   "d": 8.6,
+   "orbit": [
+    0,
+    0
+   ]
+  }
+ ],
+ "punches": [],
+ "shakes": [],
+ "fstops": [
+  [
+   "start",
+   16.0
+  ]
+ ],
+ "static": true,
+ "card_x": -1.27,
+ "screen_gain": 1.14,
+ "rain_bg": true
+}

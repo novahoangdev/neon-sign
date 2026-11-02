@@ -1,0 +1,57 @@
+--- a/app/src/shaders/wall.ts	2026-10-31 15:35:07
++++ b/app/src/shaders/wall.ts	2026-10-31 15:35:07
+@@ -23,6 +23,7 @@
+   float2 q = clamp(p * ${k}, float2(0.5), ${tile} - 0.5);
+   float3 acc = float3(0.0);
+   for (int t = 0; t < 4; t++) {
++    if (bright[t * 3] + bright[t * 3 + 1] + bright[t * 3 + 2] <= 0.0) continue;
+     float3 s = float3(${child}.eval(q + float2(float(t) * ${tile}.x, 0.0)).rgb);
+     acc += s.r * bright[t * 3] * col[t * 3]
+          + s.g * bright[t * 3 + 1] * col[t * 3 + 1]
+@@ -121,13 +122,10 @@
+     float2 rp = ripple(p) * (0.4 + depth);
+     float2 q = float2(p.x, horizon - (p.y - horizon) * reflK) + rp * float2(1.0, reflK);
+     q.y = max(q.y, 2.0);
+-    float rq;
+-    float3 wallN = surf(q, rq);
++    float3 wallN = lightAt(q) * toLin(albedo.eval(q * imgK).rgb) * gain * 0.8;
+     // reflected tubes: vertical blur grows with distance
+     float s = 1.0 + depth * 7.0;
+-    float3 tb = tubesAt(q) * 0.5
+-              + tubesAt(q + float2(0.0, s)) * 0.25
+-              + tubesAt(q - float2(0.0, s)) * 0.25;
++    float3 tb = (tubesAt(q + float2(0.0, s * 0.5)) + tubesAt(q - float2(0.0, s * 0.5))) * 0.5;
+     float3 tubes = mix(tb, float3(lum(tb)), 0.25) * 1.7;
+     float F = refl * mix(0.95, 0.45, depth);
+     c += (wallN * 0.8 + tubes) * F;
+--- a/app/src/shaders/post.ts	2026-10-31 15:35:07
++++ b/app/src/shaders/post.ts	2026-10-31 15:35:07
+@@ -19,6 +19,11 @@
+   float2 u = f * f * (3.0 - 2.0 * f);
+   return mix(mix(hash21(i), hash21(i + float2(1, 0)), u.x), mix(hash21(i + float2(0, 1)), hash21(i + float2(1, 1)), u.x), u.y);
+ }
++float fbm3(float2 p) {
++  float s = 0.0, a = 0.5;
++  for (int i = 0; i < 3; i++) { s += a * n2(p); p = p * 2.03 + float2(17.1, 3.7); a *= 0.5; }
++  return s + 0.0625;
++}
+ float fbm(float2 p) {
+   float s = 0.0, a = 0.5;
+   for (int i = 0; i < 5; i++) { s += a * n2(p); p = p * 2.03 + float2(17.1, 3.7); a *= 0.5; }
+@@ -28,10 +33,14 @@
+ half4 main(float2 p) {
+   float3 L = lightAt(p);
+   // steam: thick at the wall base, thinning upward; curls via domain warp, drifts up and to the right
++  float band = smoothstep(horizon - 330.0, horizon - 10.0, p.y) * (1.0 - 0.55 * smoothstep(horizon + 20.0, view.y, p.y));
++  if (band * density < 0.002) {
++    float3 c0 = pow(max(L * haze, float3(0.0)), float3(1.0 / 2.2)) * 0.9;
++    return half4(half3(c0), 1.0);
++  }
+   float2 sp = p * float2(0.010, 0.016);
+-  float2 w = float2(fbm(sp + float2(0.0, time * 0.05)), fbm(sp + float2(5.2, 1.3) - float2(time * 0.03, 0.0)));
++  float2 w = float2(fbm3(sp + float2(0.0, time * 0.05)), fbm3(sp + float2(5.2, 1.3) - float2(time * 0.03, 0.0)));
+   float f = fbm(sp + w * 1.6 + float2(-time * 0.045, time * 0.06));
+-  float band = smoothstep(horizon - 330.0, horizon - 10.0, p.y) * (1.0 - 0.55 * smoothstep(horizon + 20.0, view.y, p.y));
+   float d = smoothstep(0.42, 0.85, f) * band * density;
+   float3 cold = float3(0.010, 0.014, 0.026);
+   float3 c = d * (cold + L * 0.55) + L * haze;
