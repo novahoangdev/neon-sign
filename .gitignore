@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# app build output and dependencies (see also app/.gitignore)
+app/node_modules/
+app/ios/
+app/android/
+app/.expo/
+app/dist/
+
+# recordings, renders and intermediate frames (several GB)
+render/
+
+# Blender autosave backups, Python caches, editor leftovers
+*.blend1
+__pycache__/
+*.orig
+
+# internal review screenshots
+notes/polish/
+
+# image-generation logs (local paths, account ids)
+*.log
