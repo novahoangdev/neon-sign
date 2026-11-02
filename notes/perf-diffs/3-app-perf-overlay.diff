@@ -1,0 +1,20 @@
+--- a/app/App.tsx	2026-10-31 15:35:07
++++ b/app/App.tsx	2026-10-31 15:35:07
+@@ -1,12 +1,17 @@
+ import { StatusBar } from "expo-status-bar";
+ import { GestureHandlerRootView } from "react-native-gesture-handler";
+ import { NeonScene } from "./src/scene/NeonScene";
++import { PerfOverlay } from "./src/perf/PerfOverlay";
+ 
++/** EXPO_PUBLIC_PERF=1: FPS / frame time overlay (notes/perf.md). Do not enable when recording the promo. */
++const PERF = process.env.EXPO_PUBLIC_PERF === "1";
++
+ export default function App() {
+   return (
+     <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#07060b" }}>
+       <StatusBar style="light" />
+       <NeonScene />
++      {PERF && <PerfOverlay />}
+     </GestureHandlerRootView>
+   );
+ }
